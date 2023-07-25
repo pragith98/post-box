@@ -1,6 +1,7 @@
 {
   "name": "article-box",
   "version": "0.0.0",
+  "author": "pragith98",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
