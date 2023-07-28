@@ -5,19 +5,22 @@ import { State } from '@ngxs/store';
 import { NgxsDataRepository } from '@angular-ru/ngxs/repositories';
 import {
   StateRepository,
-  DataAction
+  DataAction,
+  Payload,
+  // Persistence
 } from '@angular-ru/ngxs/decorators'
 import {
   tap,
   of,
   Observable
 } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface PostStateModel {
-  posts: Post[];
+  posts: Post | Post[];
 }
 
-
+// @Persistence()
 @StateRepository()
 @State<PostStateModel>({
   name: 'postsList',
@@ -29,7 +32,10 @@ export interface PostStateModel {
 @Injectable()
 export class PostState extends NgxsDataRepository<PostStateModel> {
 
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) {
     super()
   }
 
@@ -41,9 +47,15 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
         this.ctx.setState({
           ...state,
           posts: posts
-        })
-      })
-    )
+        });
+      }));
+  }
+
+  @DataAction()
+  createPost(@Payload('body') body: any): Observable<Post> {
+    return this.apiService.createPost(body).pipe(
+      tap(post => this.setLocalPost(post)
+        .subscribe(() => this.router.navigate(['list']))));
   }
 
   private haveFetched(): boolean {
@@ -52,7 +64,7 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
   }
 
   private fetchPosts(): Observable<Post[]> {
-    return this.apiService.getAllPosts().pipe(tap(postsList => 
+    return this.apiService.getAllPosts().pipe(tap(postsList =>
       localStorage.setItem('posts', JSON.stringify(postsList))));
   }
 
@@ -62,6 +74,15 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
       return of(posts);
     }
     return this.fetchPosts();
+  }
+
+  private setLocalPost(post: Post): Observable<Post[]> {
+    let currentLocalPosts: Post[] = [];
+    return this.getLocalPosts().pipe(tap(postsList => {
+      currentLocalPosts = postsList;
+      const updatedPosts = [...currentLocalPosts, post]
+      localStorage.setItem('posts', JSON.stringify(updatedPosts));
+    }));
   }
 
 }

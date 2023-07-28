@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
   Post,
@@ -14,9 +15,16 @@ export class PostListComponent implements OnInit {
 
   postsList$?: Observable<Post[]>;
 
-  constructor(private postState: PostState) { }
+  constructor(
+    private postState: PostState,
+    private router: Router  
+  ) { }
 
   ngOnInit(): void {
-    this.postsList$ = this.postState.getAllPosts()
+    this.postsList$ = this.postState.getAllPosts();
+  }
+
+  navigateToCreatePost() {
+    this.router.navigate(['create']);
   }
 }

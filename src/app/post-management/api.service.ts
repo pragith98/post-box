@@ -6,7 +6,8 @@ import {
 } from 'src/app/core';
 import {
   Observable,
-  map
+  map,
+  tap
 } from 'rxjs';
 
 interface ApiResponse {
@@ -24,5 +25,12 @@ export class ApiService {
   getAllPosts(): Observable<Post[]> {
     return this.apiProvider.get<ApiResponse>(Endpoint.getPosts).pipe(map(
       response => response.posts));
+  }
+
+  createPost(body: any): Observable<Post> {
+    return this.apiProvider.post<any>(
+        Endpoint.createPost, 
+        body
+      );
   }
 }

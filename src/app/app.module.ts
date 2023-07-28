@@ -8,14 +8,19 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxsDataPluginModule } from '@angular-ru/ngxs';
+import { NGXS_DATA_STORAGE_PLUGIN } from '@angular-ru/ngxs/storage';
 import { 
   PostState,
   PostManagementModule
 } from 'src/app/post-management';
+import { HeaderComponent } from './header/header.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,10 @@ import {
     NgxsLoggerPluginModule.forRoot(),
     PostManagementModule,
     HttpClientModule,
-    NgxsDataPluginModule.forRoot()
+    NgxsDataPluginModule.forRoot([
+      // NGXS_DATA_STORAGE_PLUGIN
+    ]),
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

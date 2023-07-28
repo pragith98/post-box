@@ -1,22 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { 
+import {
   PostManagementComponent,
-  PostListComponent
+  PostListComponent,
+  CreatePostComponent
 } from 'src/app/post-management';
 
 const routes: Routes = [
-  { path: '', 
-    component: PostManagementComponent, 
+  {
+    path: '',
+    component: PostManagementComponent,
     children: [
-      { 
-        path:'', 
-        redirectTo:'list', 
-        pathMatch: 'full' 
+      {
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full'
       },
-      { 
-        path:'list', 
-        component: PostListComponent 
+      {
+        path: 'list',
+        component: PostListComponent
+      },
+      {
+        path: 'create',
+        component: CreatePostComponent
       }
     ]
   }
