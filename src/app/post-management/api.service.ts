@@ -39,4 +39,8 @@ export class ApiService {
       body
     );
   }
+
+  deletePost(id: number): Observable<Post> {
+    return this.apiProvider.delete<Post>(Endpoint.deletePost(id));
+  }
 }

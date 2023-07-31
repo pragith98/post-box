@@ -10,7 +10,7 @@ import { PostState } from '../store.service';
 })
 export class CreatePostComponent {
   
-  userID = 111;
+  userID = 1;
 
   constructor(
     private router: Router,

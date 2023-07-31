@@ -5,6 +5,9 @@ export class Endpoint {
 
     static updatePost(id: number) {
         return `posts/${id}`;
-    } 
+    }
 
+    static deletePost(id: number) {
+        return `posts/${id}`;
+    }
 }

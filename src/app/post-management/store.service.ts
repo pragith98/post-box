@@ -42,7 +42,7 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
 
   @DataAction()
   getAllPosts(): Observable<Post[]> {
-    return this.getLocalPosts().pipe(
+    return this.loadPosts().pipe(
       tap(posts => {
         const state = this.ctx.getState();
         this.ctx.setState({
@@ -60,8 +60,11 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
   @DataAction()
   createPost(@Payload('body') body: any): Observable<Post> {
     return this.apiService.createPost(body).pipe(
-      tap(post => this.setLocalPost(post)
-        .subscribe(() => this.router.navigate(['list']))));
+      tap(post => {
+        const updatedPosts = [...this.getLocalPosts(), post]
+        return this.setLocalPosts(updatedPosts)
+          .subscribe(() => this.router.navigate(['list']));
+      }));
   }
 
   @DataAction()
@@ -70,45 +73,50 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
     @Payload('body') body: any
   ): Observable<Post> {
     return this.apiService.updatePost(id, body).pipe(
-      tap(post => this.updateLocalPosts(id, post)
-      .subscribe(() => this.router.navigate(['list']))));
+      tap(post => {
+        let localPosts = this.getLocalPosts();
+        const updatedPostIndex = localPosts
+          .findIndex(localPost => localPost.id === id);
+        localPosts[updatedPostIndex] = post;
+        return this.setLocalPosts(localPosts)
+          .subscribe(() => this.router.navigate(['list']));
+      }));
+  }
+
+  @DataAction()
+  deletePost(@Payload('id') id: number): Observable<Post> {
+    return this.apiService.deletePost(id).pipe(
+      tap(() => {
+        const updatedPosts = this.getLocalPosts()
+          .filter(localPost => localPost.id !== id);
+        return this.setLocalPosts(updatedPosts)
+          .subscribe(() => this.router.navigate(['list']));
+      }));
   }
 
   private haveFetched(): boolean {
-    const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-    return posts.length > 0;
+    return this.getLocalPosts().length > 0;
   }
 
   private fetchPosts(): Observable<Post[]> {
     return this.apiService.getAllPosts().pipe(tap(postsList =>
-      localStorage.setItem('posts', JSON.stringify(postsList))));
+      this.setLocalPosts(postsList)));
   }
 
-  private getLocalPosts(): Observable<Post[]> {
+  private loadPosts(): Observable<Post[]> {
     if (this.haveFetched()) {
-      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-      return of(posts);
+      return of(this.getLocalPosts());
     }
     return this.fetchPosts();
   }
 
-  private setLocalPost(post: Post): Observable<Post[]> {
-    let currentLocalPosts: Post[] = [];
-    return this.getLocalPosts().pipe(tap(postsList => {
-      currentLocalPosts = postsList;
-      const updatedPosts = [...currentLocalPosts, post]
-      localStorage.setItem('posts', JSON.stringify(updatedPosts));
-    }));
+  getLocalPosts(): Post[] {
+    return JSON.parse(localStorage.getItem('posts') || '[]');
   }
 
-  private updateLocalPosts(id: number, post: Post) {
-    let localPosts:Post[] = [];
-    return this.getLocalPosts().pipe(tap(postsList => {
-      localPosts = postsList;
-      const updatedPostIndex = localPosts.findIndex(post => post.id === id);
-      localPosts[updatedPostIndex] = post;
-      localStorage.setItem('posts', JSON.stringify(localPosts))
-    }));
+  setLocalPosts(posts: any): Observable<Post[]> {
+    localStorage.setItem('posts', JSON.stringify(posts));
+    return of (this.getLocalPosts());
   }
 
 }

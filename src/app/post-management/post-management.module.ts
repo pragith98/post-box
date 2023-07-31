@@ -10,6 +10,8 @@ import { PostManagementComponent } from './post-management.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 import {
   PostListComponent,
@@ -24,6 +26,8 @@ import { ViewPostComponent } from './view-post/view-post.component';
 import { ViewPostService } from './view-post/view-post.service';
 import { UpdatePostComponent } from './update-post/update-post.component';
 import { UpdatePostService } from './update-post/update-post.service';
+import { DeletePostComponent } from './delete-post/delete-post.component';
+
 
 @NgModule({
   declarations: [
@@ -34,6 +38,7 @@ import { UpdatePostService } from './update-post/update-post.service';
     CreatePostComponent,
     ViewPostComponent,
     UpdatePostComponent,
+    DeletePostComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +49,8 @@ import { UpdatePostService } from './update-post/update-post.service';
     MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule 
   ],
   providers: [
     ApiService,

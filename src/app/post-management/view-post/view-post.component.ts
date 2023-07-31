@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewPostService } from './view-post.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DeletePostComponent } from '../delete-post/delete-post.component';
 
 @Component({
   selector: 'app-view-post',
@@ -14,7 +16,8 @@ export class ViewPostComponent implements OnInit{
   constructor(
     private service: ViewPostService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   post = {
@@ -37,6 +40,12 @@ export class ViewPostComponent implements OnInit{
 
   navigateToUpdatePost() {
     this.router.navigate([this.postID,'update']);
+  }
+
+  openDeleteConfirmation() {
+    this.dialog.open(DeletePostComponent,{
+      data:this.post
+    })
   }
 
 }

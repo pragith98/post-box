@@ -43,4 +43,12 @@ export class ApiProviderService {
     }))
   }
 
+  delete<T>(endpoint: string): Observable<T> {
+    return this.http.delete<T>(`${this.apiBaseAddress}/${endpoint}`)
+      .pipe(catchError((error: HttpErrorResponse) => {
+        console.debug(error);
+        return throwError(() => 'Error in API call delete ' + endpoint)
+      }))
+  }
+
 }

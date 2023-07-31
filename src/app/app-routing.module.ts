@@ -7,6 +7,7 @@ import {
   ViewPostComponent
 } from 'src/app/post-management';
 import { UpdatePostComponent } from './post-management/update-post/update-post.component';
+import { DeletePostComponent } from './post-management/delete-post/delete-post.component';
 
 const routes: Routes = [
   {

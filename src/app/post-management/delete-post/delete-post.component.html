@@ -1,0 +1,16 @@
+<mat-card>
+    <mat-card-content>
+        <h4>Are you sure you want to delete this?</h4> <br>
+        "<b>{{data.title | textShorter: 30}} </b>"
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-stroked-button  matTooltip='Cancel delete' mat-dialog-close>
+            Cancel
+        </button>
+        <button mat-flat-button color='warn'
+            matTooltip='Delete post' (click)="deletePost()">
+            <mat-icon>delete</mat-icon>
+            Delete
+        </button>
+    </mat-card-actions>
+</mat-card>
