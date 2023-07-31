@@ -27,7 +27,7 @@ export class CreatePostComponent {
 
   onSubmit() {
     if(this.myForm.valid) {
-      const post = {...this.myForm.value, userId: 1}
+      const post = {...this.myForm.value, userId: this.userID}
       this.postState.createPost(post)
     }
   }

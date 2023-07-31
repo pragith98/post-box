@@ -33,4 +33,14 @@ export class ApiProviderService {
     }))
   }
 
+  update<T>(endpoint: string, body: any): Observable<T> {
+    return this.http.patch<T>(
+      `${this.apiBaseAddress}/${endpoint}`,
+      body
+    ).pipe(catchError((error: HttpErrorResponse) => {
+      console.debug(error);
+      return throwError(() => 'Error in API call update ' + endpoint)
+    }))
+  }
+
 }

@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ViewPostComponent implements OnInit{
 
+  postID = 0;
+
   constructor(
     private service: ViewPostService,
     private activatedRoute: ActivatedRoute,
@@ -23,14 +25,18 @@ export class ViewPostComponent implements OnInit{
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      const postID = Number(params['id'])
+      this.postID = Number(params['id']);
     
-      this.post = this.service.showPost(postID)
+      this.post = this.service.showPost(this.postID);
     });
   }
 
   navigateToPostList() {
-    this.router.navigate(['list'])
+    this.router.navigate(['list']);
+  }
+
+  navigateToUpdatePost() {
+    this.router.navigate([this.postID,'update']);
   }
 
 }

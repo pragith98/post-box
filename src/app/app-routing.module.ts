@@ -6,6 +6,7 @@ import {
   CreatePostComponent,
   ViewPostComponent
 } from 'src/app/post-management';
+import { UpdatePostComponent } from './post-management/update-post/update-post.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path: ':id/view',
         component: ViewPostComponent
+      },
+      {
+        path: ':id/update',
+        component: UpdatePostComponent
       }
     ]
   }

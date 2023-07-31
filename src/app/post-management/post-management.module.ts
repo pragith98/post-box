@@ -22,6 +22,8 @@ import {
 import { CreatePostComponent } from './create-post/create-post.component';
 import { ViewPostComponent } from './view-post/view-post.component';
 import { ViewPostService } from './view-post/view-post.service';
+import { UpdatePostComponent } from './update-post/update-post.component';
+import { UpdatePostService } from './update-post/update-post.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { ViewPostService } from './view-post/view-post.service';
     CardComponent,
     CreatePostComponent,
     ViewPostComponent,
+    UpdatePostComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +49,8 @@ import { ViewPostService } from './view-post/view-post.service';
   providers: [
     ApiService,
     ApiProviderService,
-    ViewPostService
+    ViewPostService,
+    UpdatePostService
   ]
 })
 export class PostManagementModule { }

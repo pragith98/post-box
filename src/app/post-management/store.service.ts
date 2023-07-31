@@ -64,6 +64,16 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
         .subscribe(() => this.router.navigate(['list']))));
   }
 
+  @DataAction()
+  updatePost(
+    @Payload('id') id: number,
+    @Payload('body') body: any
+  ): Observable<Post> {
+    return this.apiService.updatePost(id, body).pipe(
+      tap(post => this.updateLocalPosts(id, post)
+      .subscribe(() => this.router.navigate(['list']))));
+  }
+
   private haveFetched(): boolean {
     const posts = JSON.parse(localStorage.getItem('posts') || '[]');
     return posts.length > 0;
@@ -88,6 +98,16 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
       currentLocalPosts = postsList;
       const updatedPosts = [...currentLocalPosts, post]
       localStorage.setItem('posts', JSON.stringify(updatedPosts));
+    }));
+  }
+
+  private updateLocalPosts(id: number, post: Post) {
+    let localPosts:Post[] = [];
+    return this.getLocalPosts().pipe(tap(postsList => {
+      localPosts = postsList;
+      const updatedPostIndex = localPosts.findIndex(post => post.id === id);
+      localPosts[updatedPostIndex] = post;
+      localStorage.setItem('posts', JSON.stringify(localPosts))
     }));
   }
 
