@@ -7,4 +7,10 @@
     <mat-card-content class='card-content'>
         {{post.body|textShorter: 80}}
     </mat-card-content>
+    <mat-card-actions>
+        <button mat-button color='primary' matTooltip='Show full post'
+            (click)="navigateToShowPost()">
+            Read more..
+        </button>
+    </mat-card-actions>
 </mat-card>

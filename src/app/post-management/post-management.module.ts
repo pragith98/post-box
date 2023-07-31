@@ -20,6 +20,8 @@ import {
   TextShorterPipe
 } from 'src/app/core';
 import { CreatePostComponent } from './create-post/create-post.component';
+import { ViewPostComponent } from './view-post/view-post.component';
+import { ViewPostService } from './view-post/view-post.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { CreatePostComponent } from './create-post/create-post.component';
     PostListComponent,
     CardComponent,
     CreatePostComponent,
+    ViewPostComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,10 @@ import { CreatePostComponent } from './create-post/create-post.component';
     MatInputModule,
     ReactiveFormsModule
   ],
-  providers: [ApiService,ApiProviderService]
+  providers: [
+    ApiService,
+    ApiProviderService,
+    ViewPostService
+  ]
 })
 export class PostManagementModule { }

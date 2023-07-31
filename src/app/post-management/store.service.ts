@@ -7,6 +7,7 @@ import {
   StateRepository,
   DataAction,
   Payload,
+  Computed,
   // Persistence
 } from '@angular-ru/ngxs/decorators'
 import {
@@ -49,6 +50,11 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
           posts: posts
         });
       }));
+  }
+
+  @Computed()
+  public get getPost(): any {
+    return this.snapshot.posts;
   }
 
   @DataAction()

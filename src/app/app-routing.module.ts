@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   PostManagementComponent,
   PostListComponent,
-  CreatePostComponent
+  CreatePostComponent,
+  ViewPostComponent
 } from 'src/app/post-management';
 
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
       {
         path: 'create',
         component: CreatePostComponent
+      },
+      {
+        path: ':id/view',
+        component: ViewPostComponent
       }
     ]
   }
