@@ -3,13 +3,14 @@
         <mat-card-title class='mat-headline-5'>Posts</mat-card-title>
         <span class='spacer'></span>
         <button mat-flat-button color='primary' matTooltip='Add new post'
-            (click)="navigateToCreatePost()">
+            (click)="navigateToCreatePost()" 
+            *ngIf="userState.isAuthenticated">
             <mat-icon>add</mat-icon>
             Add new
         </button>
     </mat-card-header>
     <mat-card-content class='posts-grid'>
-        <app-card *ngFor="let post of (postsList$ |async)" 
+        <app-card *ngFor="let post of postState.getPosts" 
             [post]="post">
         </app-card>
     </mat-card-content>

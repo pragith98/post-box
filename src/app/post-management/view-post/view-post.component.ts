@@ -1,8 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewPostService } from './view-post.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DeletePostComponent } from '../delete-post/delete-post.component';
+import { ViewPostService } from './view-post.service';
+import { 
+  Component, 
+  OnInit 
+} from '@angular/core';
+import { 
+  ActivatedRoute, 
+  Router 
+} from '@angular/router';
+import { DeletePostComponent } from 'src/app/post-management';
+import { UserState } from 'src/app/user-management/store.service';
 
 @Component({
   selector: 'app-view-post',
@@ -17,7 +24,8 @@ export class ViewPostComponent implements OnInit{
     private service: ViewPostService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public userState: UserState
   ) { }
 
   post = {

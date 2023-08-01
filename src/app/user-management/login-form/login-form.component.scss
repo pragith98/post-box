@@ -1,0 +1,17 @@
+.login-form {
+    width: 30%;
+    margin: 0 auto;
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    mat-card-actions {
+        display: flex;
+        flex-direction: column;
+    }
+}

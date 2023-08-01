@@ -1,16 +1,18 @@
 import { Injectable } from "@angular/core";
-import { PostState } from "../store.service";
-import { Post } from "../post.model";
+import { 
+    PostState, 
+    Post 
+} from "src/app/post-management";
 
 @Injectable()
 export class ViewPostService {
 
     constructor(private postState: PostState) {
-        this.postState.getAllPosts()
+        this.postState.setPostsToState()
     }
 
     showPost(postID: number): Post {
-        const selectedPost = this.postState.getPost
+        const selectedPost = this.postState.getPosts
             .filter((post: Post) => post.id === postID);
         return selectedPost[0];
     }

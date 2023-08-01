@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 import {
   PostManagementComponent,
   PostListComponent,
   CreatePostComponent,
-  ViewPostComponent
+  ViewPostComponent,
+  UpdatePostComponent
 } from 'src/app/post-management';
-import { UpdatePostComponent } from './post-management/update-post/update-post.component';
-import { DeletePostComponent } from './post-management/delete-post/delete-post.component';
+import { 
+  UserManagementComponent,
+  LoginFormComponent
+} from 'src/app/user-management';
 
 const routes: Routes = [
   {
@@ -25,7 +29,8 @@ const routes: Routes = [
       },
       {
         path: 'create',
-        component: CreatePostComponent
+        component: CreatePostComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: ':id/view',
@@ -33,14 +38,30 @@ const routes: Routes = [
       },
       {
         path: ':id/update',
-        component: UpdatePostComponent
+        component: UpdatePostComponent,
+        canActivate: [AuthGuard]
       }
     ]
+  },
+  {
+    path: 'user', 
+    component:UserManagementComponent,
+    children: [
+      {
+        path: 'login',
+        component: LoginFormComponent
+      }
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: 'list'
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

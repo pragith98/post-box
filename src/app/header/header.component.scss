@@ -1,0 +1,9 @@
+.profile-image {
+    border-radius: 100px;
+    width: 40px;
+    border: 3px solid white;
+
+    &:hover {
+        cursor: pointer;
+    }
+}

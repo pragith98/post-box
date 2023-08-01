@@ -5,14 +5,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ApiService } from './api.service';
-import { PostManagementComponent } from './post-management.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-
-
 import {
   PostListComponent,
   CardComponent
@@ -21,6 +17,8 @@ import {
   ApiProviderService,
   TextShorterPipe
 } from 'src/app/core';
+import { ApiService } from './api.service';
+import { PostManagementComponent } from './post-management.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { ViewPostComponent } from './view-post/view-post.component';
 import { ViewPostService } from './view-post/view-post.service';

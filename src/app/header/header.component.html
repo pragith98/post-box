@@ -1,3 +1,12 @@
 <mat-toolbar color="primary">
     <span>Post <b>Box</b></span>
+    <span class="spacer"></span>
+    <button mat-flat-button color='accent' matTooltip='Click to login'
+        (click)="navigateToLogin()" *ngIf="!userState.isAuthenticated">
+        Login
+    </button>
+    <img matTooltip='User profile' class="profile-image" 
+        src="{{userState.getUser.image}}" 
+        *ngIf="userState.isAuthenticated"
+        (click)="openViewUserDilog()">
 </mat-toolbar>

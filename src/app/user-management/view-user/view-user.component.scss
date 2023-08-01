@@ -1,0 +1,15 @@
+.view-user {
+    .profile-pic {
+        width: 200px;
+        border: 5px solid rgb(242, 242, 242);
+        border-radius: 100%;
+    }
+
+    table {
+        width: 100%;
+
+        .image-cell{
+            text-align: center;
+        }
+    }
+}

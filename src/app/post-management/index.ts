@@ -5,3 +5,5 @@ export { PostState } from './store.service';
 export { Post } from './post.model';
 export { CreatePostComponent } from './create-post/create-post.component';
 export { ViewPostComponent } from './view-post/view-post.component';
+export { UpdatePostComponent } from './update-post/update-post.component';
+export { DeletePostComponent } from './delete-post/delete-post.component';

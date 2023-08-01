@@ -1,7 +1,15 @@
-import { Component, Inject } from '@angular/core';
-import { PostState } from '../store.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Post } from '../post.model';
+import { 
+  Component, 
+  Inject 
+} from '@angular/core';
+import { 
+  PostState,
+  Post 
+} from 'src/app/post-management';
+import { 
+  MAT_DIALOG_DATA,
+  MatDialogRef
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-post',

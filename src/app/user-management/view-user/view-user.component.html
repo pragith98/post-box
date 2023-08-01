@@ -1,0 +1,39 @@
+<div class="view-user">
+    <h1 mat-dialog-title>User profile</h1>
+    <div mat-dialog-content>
+        <table>
+            <tr>
+                <td colspan="2" class="image-cell">
+                    <img class="profile-pic" src="{{userState.getUser.image}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <b>
+                        : {{userState.getUser.firstName}}
+                        {{userState.getUser.lastName}}
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><b>: {{userState.getUser.email}}</b></td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td><b>: {{userState.getUser.username}}</b></td>
+            </tr>
+        </table>
+        <button mat-stroked-button color="primary" 
+            (click)="logout()">
+            Logout
+        </button>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-flat-button color="primary" 
+            (click)="closeDialog()">
+            Ok
+        </button>
+    </div>
+</div>

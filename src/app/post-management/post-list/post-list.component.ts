@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import {
-  Post,
-  PostState
-} from 'src/app/post-management';
+import { 
+  Component, 
+  OnInit 
+} from '@angular/core';
+import { PostState } from 'src/app/post-management';
+import { UserState } from 'src/app/user-management/store.service';
 
 @Component({
   selector: 'app-post-list',
@@ -13,15 +13,14 @@ import {
 })
 export class PostListComponent implements OnInit {
 
-  postsList$?: Observable<Post[]>;
-
   constructor(
-    private postState: PostState,
-    private router: Router  
+    public postState: PostState,
+    private router: Router,
+    public userState: UserState
   ) { }
 
   ngOnInit(): void {
-    this.postsList$ = this.postState.getAllPosts();
+    this.postState.setPostsToState()
   }
 
   navigateToCreatePost() {

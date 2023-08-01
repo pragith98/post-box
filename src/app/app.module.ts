@@ -8,13 +8,20 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxsDataPluginModule } from '@angular-ru/ngxs';
-import { NGXS_DATA_STORAGE_PLUGIN } from '@angular-ru/ngxs/storage';
+import { HeaderComponent } from './header/header.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 import { 
   PostState,
   PostManagementModule
 } from 'src/app/post-management';
-import { HeaderComponent } from './header/header.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { 
+  UserManagementModule, 
+  UserState 
+} from 'src/app/user-management';
+
 
 
 @NgModule({
@@ -27,15 +34,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgxsModule.forRoot([
-      PostState
+      PostState,
+      UserState
     ]),
     NgxsLoggerPluginModule.forRoot(),
     PostManagementModule,
     HttpClientModule,
-    NgxsDataPluginModule.forRoot([
-      // NGXS_DATA_STORAGE_PLUGIN
-    ]),
-    MatToolbarModule
+    NgxsDataPluginModule.forRoot(),
+    MatToolbarModule,
+    UserManagementModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

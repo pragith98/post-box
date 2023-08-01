@@ -7,12 +7,14 @@
         </button>
         <span class="spacer"></span>
         <button mat-flat-button color='primary'
-            matTooltip='Edit post' (click)="navigateToUpdatePost()">
+            matTooltip='Edit post' (click)="navigateToUpdatePost()"
+            *ngIf="userState.isAuthenticated">
             <mat-icon>edit</mat-icon>
             Edit
         </button>
         <button mat-flat-button color='warn'
-            matTooltip='Delete post' (click)="openDeleteConfirmation()">
+            matTooltip='Delete post' (click)="openDeleteConfirmation()"
+            *ngIf="userState.isAuthenticated">
             <mat-icon>delete</mat-icon>
             Delete
         </button>

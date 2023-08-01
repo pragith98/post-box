@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PostState } from '../store.service';
+import { PostState } from 'src/app/post-management';
+import { 
+  FormControl, 
+  FormGroup, 
+  Validators 
+} from '@angular/forms';
+import { UserState } from 'src/app/user-management/store.service';
 
 @Component({
   selector: 'app-create-post',
@@ -10,11 +15,12 @@ import { PostState } from '../store.service';
 })
 export class CreatePostComponent {
   
-  userID = 1;
+  userID = this.userState.getUser.id;
 
   constructor(
     private router: Router,
-    private postState: PostState
+    private postState: PostState,
+    private userState: UserState
   ) { }
 
   title = new FormControl('', Validators.required);

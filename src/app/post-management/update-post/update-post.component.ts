@@ -1,8 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PostState } from '../store.service';
+import { 
+  Component,
+  OnInit 
+} from '@angular/core';
+import { 
+  FormControl, 
+  Validators, 
+  FormGroup 
+} from '@angular/forms';
+import { 
+  ActivatedRoute, 
+  Router 
+} from '@angular/router';
+import { PostState } from 'src/app/post-management';
 import { UpdatePostService } from './update-post.service';
+import { UserState } from 'src/app/user-management/store.service';
 
 @Component({
   selector: 'app-update-post',
@@ -11,7 +22,7 @@ import { UpdatePostService } from './update-post.service';
 })
 export class UpdatePostComponent implements OnInit{
   
-  userID = 111;
+  userID = this.userState.getUser.id;
   postID = 0;
 
   constructor(
@@ -19,6 +30,7 @@ export class UpdatePostComponent implements OnInit{
     private router: Router,
     private postState: PostState,
     private activatedRoute: ActivatedRoute,
+    private userState: UserState
   ) { }
 
   ngOnInit(): void {

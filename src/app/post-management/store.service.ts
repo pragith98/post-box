@@ -8,7 +8,6 @@ import {
   DataAction,
   Payload,
   Computed,
-  // Persistence
 } from '@angular-ru/ngxs/decorators'
 import {
   tap,
@@ -17,11 +16,10 @@ import {
 } from 'rxjs';
 import { Router } from '@angular/router';
 
-export interface PostStateModel {
+interface PostStateModel {
   posts: Post | Post[];
 }
 
-// @Persistence()
 @StateRepository()
 @State<PostStateModel>({
   name: 'postsList',
@@ -41,19 +39,18 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
   }
 
   @DataAction()
-  getAllPosts(): Observable<Post[]> {
-    return this.loadPosts().pipe(
-      tap(posts => {
-        const state = this.ctx.getState();
-        this.ctx.setState({
-          ...state,
-          posts: posts
-        });
-      }));
+  setPostsToState() {
+    this.loadPosts().subscribe(posts => {
+      const state = this.ctx.getState();
+      this.ctx.setState({
+        ...state,
+        posts: posts
+      });
+    });
   }
 
   @Computed()
-  public get getPost(): any {
+  get getPosts(): any {
     return this.snapshot.posts;
   }
 
@@ -110,11 +107,11 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
     return this.fetchPosts();
   }
 
-  getLocalPosts(): Post[] {
+  private getLocalPosts(): Post[] {
     return JSON.parse(localStorage.getItem('posts') || '[]');
   }
 
-  setLocalPosts(posts: any): Observable<Post[]> {
+  private setLocalPosts(posts: any): Observable<Post[]> {
     localStorage.setItem('posts', JSON.stringify(posts));
     return of (this.getLocalPosts());
   }
