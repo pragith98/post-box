@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostState } from 'src/app/post-management';
+import { 
+  FormState, 
+  PostState 
+} from 'src/app/post-management';
 import { 
   FormControl, 
   FormGroup, 
@@ -20,11 +23,18 @@ export class CreatePostComponent {
   constructor(
     private router: Router,
     private postState: PostState,
-    private userState: UserState
+    private userState: UserState,
+    private formState: FormState
   ) { }
 
-  title = new FormControl('', Validators.required);
-  body = new FormControl('', Validators.required);
+  title = new FormControl(
+    this.formState.getStoredFormData.title, 
+    Validators.required
+  );
+  body = new FormControl(
+    this.formState.getStoredFormData.body, 
+    Validators.required
+  );
 
   myForm = new FormGroup({
     title: this.title,
@@ -33,12 +43,21 @@ export class CreatePostComponent {
 
   onSubmit() {
     if(this.myForm.valid) {
-      const post = {...this.myForm.value, userId: this.userID}
-      this.postState.createPost(post)
+      const post = {
+        ...this.myForm.value, 
+        userId: this.userID
+      }
+      this.postState.createPost(post);
+      this.formState.resetStoredFormData();
     }
   }
 
-  navigateToPostList() {
+  cancelAndNavigateToPostList() {
+    this.formState.resetStoredFormData();
     this.router.navigate(['list']);
+  }
+
+  storeFormData() {
+    this.formState.addFromData(this.myForm.value)
   }
 }

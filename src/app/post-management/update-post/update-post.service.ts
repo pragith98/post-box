@@ -11,6 +11,11 @@ export class UpdatePostService {
         this.postState.setPostsToState()
     }
 
+    /**
+     * Select and retrieve post by its ID
+     * @param postID 
+     * @returns Post
+     */
     showPost(postID: number): Post {
         const selectedPost = this.postState.getPosts
             .filter((post: Post) => post.id === postID);

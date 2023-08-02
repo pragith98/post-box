@@ -53,7 +53,10 @@ export class UpdatePostComponent implements OnInit{
 
   onSubmit() {
     if(this.myForm.valid) {
-      const post = {...this.myForm.value, userId: this.userID}
+      const post = {
+        ...this.myForm.value, 
+        userId: this.userID
+      }
       this.postState.updatePost(this.postID, post)
     }
   }

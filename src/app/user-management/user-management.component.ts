@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.scss']
 })
-export class UserManagementComponent {
-
-}
+export class UserManagementComponent { }

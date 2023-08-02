@@ -7,7 +7,8 @@
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Enter title</mat-label>
-                    <input matInput [formControl]="title">
+                    <input matInput [formControl]="title" 
+                        (input)="storeFormData()">
                     <div *ngIf="title.invalid && title.dirty || title.touched">
                         <mat-error *ngIf="title.errors?.['required']">
                             Title is required
@@ -18,7 +19,8 @@
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Enter body</mat-label>
-                    <textarea matInput [formControl]="body"></textarea>
+                    <textarea matInput [formControl]="body"
+                        (input)="storeFormData()"></textarea>
                     <div *ngIf="body.invalid && body.dirty || body.touched">
                         <mat-error *ngIf="body.errors?.['required']">
                             Body is required
@@ -28,7 +30,7 @@
             </div>
             <mat-card-actions align="end">
                 <button mat-stroked-button  matTooltip='Cancel creation'
-                 (click)="navigateToPostList()">
+                 (click)="cancelAndNavigateToPostList()">
                     Cancel
                 </button>
                 <button mat-flat-button color='primary'

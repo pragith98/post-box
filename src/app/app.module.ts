@@ -15,7 +15,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { 
   PostState,
-  PostManagementModule
+  PostManagementModule,
+  FormState
 } from 'src/app/post-management';
 import { 
   UserManagementModule, 
@@ -35,7 +36,8 @@ import {
     BrowserAnimationsModule,
     NgxsModule.forRoot([
       PostState,
-      UserState
+      UserState,
+      FormState
     ]),
     NgxsLoggerPluginModule.forRoot(),
     PostManagementModule,
