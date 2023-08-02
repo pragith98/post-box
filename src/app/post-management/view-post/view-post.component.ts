@@ -8,7 +8,7 @@ import {
   ActivatedRoute, 
   Router 
 } from '@angular/router';
-import { DeletePostComponent } from 'src/app/post-management';
+import { DeletePostComponent, PostState } from 'src/app/post-management';
 import { UserState } from 'src/app/user-management/store.service';
 
 @Component({
@@ -25,8 +25,11 @@ export class ViewPostComponent implements OnInit{
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    public userState: UserState
-  ) { }
+    public userState: UserState,
+    private postState: PostState
+  ) { 
+    this.postState.getAllPosts()
+  }
 
   post = {
     id: 0,

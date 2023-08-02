@@ -58,6 +58,6 @@ export class CreatePostComponent {
   }
 
   storeFormData() {
-    this.formState.addFromData(this.myForm.value)
+    this.formState.addFormData(this.myForm.value)
   }
 }

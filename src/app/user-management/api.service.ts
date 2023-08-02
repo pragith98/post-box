@@ -13,6 +13,11 @@ export class ApiService {
 
     constructor(private apiProvider: ApiProviderService) { }
 
+    /**
+     * Log user by calling API with provided credentials.
+     * @param credentials 
+     * @returns {Observable<User>}
+     */
     userLogin(credentials: LoginCredentials): Observable<User> {
         return this.apiProvider.post<User>(Endpoint.loginUser, credentials);
     }

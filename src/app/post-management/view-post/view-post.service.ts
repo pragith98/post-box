@@ -8,7 +8,7 @@ import {
 export class ViewPostService {
 
     constructor(private postState: PostState) {
-        this.postState.setPostsToState()
+        this.postState.getAllPosts()
     }
 
     /**

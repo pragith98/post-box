@@ -8,7 +8,7 @@ import {
 export class UpdatePostService {
     
     constructor(private postState: PostState) {
-        this.postState.setPostsToState()
+        this.postState.getAllPosts()
     }
 
     /**

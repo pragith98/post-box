@@ -46,7 +46,7 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
   }
 
   /**
-   * Retrieves current posts from state.
+   * Retrieves posts from current state.
    */
   @Computed()
   get getPosts(): any {
@@ -54,39 +54,65 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
   }
 
   /**
-   * Fetches posts data and update the post state with retrieved data.
+   * Update the post state with retrieved data.
+   */
+  private updatePostState(posts: Post[]): void {
+    const state = this.ctx.getState();
+    this.ctx.setState({
+      ...state,
+      posts: posts
+    });
+  }
+
+  /**
+   * Fetching posts and update post state.
    */
   @DataAction()
-  setPostsToState() {
-    this.loadPosts().subscribe(posts => {
-      const state = this.ctx.getState();
-      this.ctx.setState({
-        ...state,
-        posts: posts
-      });
-    });
+  fetchPosts(): void {
+    this.apiService.getPosts()
+      .subscribe(posts =>this.setLocalPosts(posts)
+        .subscribe(() => this.updatePostState(posts)));
+  }
+
+  /**
+   * Check if posts are fetched by verifing the number of posts available in 
+   * the local storage.
+   */
+  private haveFetched(): boolean {
+    return this.getLocalPosts().length > 0;
+  }
+
+  /**
+   * Retrieve posts data from local storage and set that data to posts state 
+   * if data already has been fetched to local storage. 
+   * If already not fetched, perform function to fetch post data.
+   */
+  @DataAction()
+  getAllPosts(): void {
+    if (this.haveFetched()) {
+      this.updatePostState(this.getLocalPosts())
+    } else this.fetchPosts();
   }
 
   /**
    * Performs post creation by providing post data. if creation is successful,
    * add new post to local storage and the application navigate to 'list' page.
-   * @param body 
-   * @returns {Observable<Post>}
+   * @param post 
    */
   @DataAction()
-  createPost(@Payload('body') body: any): void {
-    this.apiService.createPost(body)
-      .subscribe(post => {
-        const updatedPosts = [...this.getLocalPosts(), post]
+  createPost(@Payload('post') post: any): void {
+    this.apiService.createPost(post)
+      .subscribe(newPost => {
+        const updatedPosts = [...this.getLocalPosts(), newPost]
         this.setLocalPosts(updatedPosts)
           .subscribe(() => this.router.navigate(['list']));
       });
   }
 
   /**
-   * Performs post updating by providing post id and body. if the updating is
-   * successful, the previous post in local storage is replaced with the new
-   * updated post and the application navigate to 'list' page.
+   * Performs post updating by providing post id and post data. if the updating 
+   * is successful, the previous post in local storage is replaced with the new
+   * updated post and the application navigate to 'view' page.
    * @param id 
    * @param post 
    */
@@ -96,13 +122,16 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
     @Payload('post') post: any
   ): void {
     this.apiService.updatePost(id, post)
-      .subscribe(post => {
-        let localPosts = this.getLocalPosts();
+      .subscribe(updatedPost => {
+        const localPosts = this.getLocalPosts();
         const updatedPostIndex = localPosts
           .findIndex(localPost => localPost.id === id);
-        localPosts[updatedPostIndex] = post;
+        localPosts[updatedPostIndex] = updatedPost;
         this.setLocalPosts(localPosts)
-          .subscribe(() => this.router.navigate(['list']));
+          .subscribe(() => this.router.navigate([
+            id,
+            'view'
+          ]));
       });
   }
 
@@ -121,36 +150,6 @@ export class PostState extends NgxsDataRepository<PostStateModel> {
         this.setLocalPosts(updatedPosts)
           .subscribe(() => this.router.navigate(['list']));
       }));
-  }
-
-  /**
-   * Check if posts are fetched by verifing the number of posts available in 
-   * the local storage.
-   * @returns {boolean}
-   */
-  private haveFetched(): boolean {
-    return this.getLocalPosts().length > 0;
-  }
-
-  /**
-   * Retrieves and fetch posts data calling API.
-   * @returns {Observable<Post[]>}
-   */
-  private fetchPosts(): Observable<Post[]> {
-    return this.apiService.getAllPosts().pipe(tap(postsList =>
-      this.setLocalPosts(postsList)));
-  }
-
-  /**
-   * Retrieve posts data from local storage if it has been fetched. 
-   * If already not fetched, perform function to get post data calling API.
-   * @returns {Observable<Post[]>}
-   */
-  private loadPosts(): Observable<Post[]> {
-    if (this.haveFetched()) {
-      return of(this.getLocalPosts());
-    }
-    return this.fetchPosts();
   }
 
   /**
@@ -197,11 +196,11 @@ export class FormState extends NgxsDataRepository<FormStateModel>{
   }
 
   /**
-   * Store form data in the local storage.
+   * Store form data in local storage.
    * @param formData 
    */
   @DataAction()
-  addFromData(@Payload('formData') formData: any) {
+  addFormData(@Payload('formData') formData: any) {
     localStorage.setItem('formData',JSON.stringify(formData));
   }
  
@@ -223,8 +222,8 @@ export class FormState extends NgxsDataRepository<FormStateModel>{
   }
 
   /**
-   * Set data to formData state by retrieving stored form data from local storage
-   * if form data is avalilable in the local storage.
+   * Set data to formData state by retrieving stored form data from 
+   * local storage if form data is avalilable in the local storage.
    */
   private setFormStateData() {
     if(localStorage.getItem('formData') !== null) {

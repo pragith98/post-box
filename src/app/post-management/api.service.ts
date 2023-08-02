@@ -21,11 +21,20 @@ export class ApiService {
 
   constructor(private apiProvider: ApiProviderService) { }
 
-  getAllPosts(): Observable<Post[]> {
+  /**
+   * Retrieves post data by calling API.
+   * @returns {Observable<Post[]>}
+   */
+  getPosts(): Observable<Post[]> {
     return this.apiProvider.get<ApiResponse>(Endpoint.getPosts).pipe(map(
       response => response.posts));
   }
 
+  /**
+   * Create post by calling API with provided data and retrieve created post 
+   * @param body 
+   * @returns {Observable<Post>}
+   */
   createPost(body: any): Observable<Post> {
     return this.apiProvider.post<any>(
         Endpoint.createPost, 
@@ -33,6 +42,12 @@ export class ApiService {
       );
   }
 
+  /**
+   * Update post by calling API with provided data and retrieve updated post.
+   * @param id 
+   * @param body 
+   * @returns {Observable<Post>}
+   */
   updatePost(id: number, body: any): Observable<Post> {
     return this.apiProvider.update<any>(
       Endpoint.updatePost(id),
@@ -40,6 +55,11 @@ export class ApiService {
     );
   }
 
+  /**
+   * Delete post by calling API with provided post ID.
+   * @param id 
+   * @returns {Observable<Post>}
+   */
   deletePost(id: number): Observable<Post> {
     return this.apiProvider.delete<Post>(Endpoint.deletePost(id));
   }

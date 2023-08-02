@@ -20,7 +20,7 @@ export class PostListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.postState.setPostsToState()
+    this.postState.getAllPosts()
   }
 
   navigateToCreatePost() {
