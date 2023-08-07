@@ -5,11 +5,11 @@ export class Endpoint {
     static getPosts = 'posts';
     static createPost = 'posts/add';
 
-    static updatePost(id: number) {
+    static updatePost(id: number): string {
         return `posts/${id}`;
     }
 
-    static deletePost(id: number) {
+    static deletePost(id: number): string {
         return `posts/${id}`;
     }
 

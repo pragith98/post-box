@@ -2,21 +2,21 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import {
-  PostManagementComponent,
+  PostComponent,
   PostListComponent,
   CreatePostComponent,
   ViewPostComponent,
   UpdatePostComponent
-} from 'src/app/post-management';
+} from 'src/app/post';
 import { 
-  UserManagementComponent,
+  UserComponent,
   LoginFormComponent
-} from 'src/app/user-management';
+} from 'src/app/user';
 
 const routes: Routes = [
   {
     path: '',
-    component: PostManagementComponent,
+    component: PostComponent,
     children: [
       {
         path: '',
@@ -45,7 +45,7 @@ const routes: Routes = [
   },
   {
     path: 'user', 
-    component:UserManagementComponent,
+    component:UserComponent,
     children: [
       {
         path: 'login',

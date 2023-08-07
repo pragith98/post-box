@@ -7,7 +7,7 @@ import {
   UrlTree 
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserState } from './user-management/store.service';
+import { UserState } from 'src/app/store';
 
 @Injectable({
   providedIn: 'root'
